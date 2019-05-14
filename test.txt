@@ -1,14 +1,43 @@
 {
-	"code": 0,
-	"msg": "success",
-	"result": {
-		"table": {
-			"actionValue": "<input type=\"text\" name=\"actionValue1\" id=\"actionValue1\" value=\"1\" style=\"border:0px solid #D4D4D4;width:80px;height:25px\" />",
-			"actionValueBatchNum": "<input type=\"text\" name=\"actionValueBatchNum1\" id=\"actionValueBatchNum1\" onblur=\"handleBlur('actionValueBatchNum1')\" style=\"border:0px solid #D4D4D4;width:280px;height:25px\" />",
-			"actionValueTypeID": "<select class=\"shortselect\" onchange=\"handleChange('actionValueTypeID1')\" name=\"actionValueTypeID1\" id=\"actionValueTypeID1\" style=\"border:0px;width:180px;height:25px\">\n<option value=\"0\">请选择</option>\n<option value=\"3\">20元抵用券</option>\n<option value=\"4\">免房券</option>\n<option value=\"6\">免费注册银会员法宝</option>\n<option value=\"7\">0元体验房法宝</option>\n<option value=\"8\">新开卡赠券</option>\n<option value=\"9\">会员消费赠券</option>\n<option value=\"10\">铂金卡赠券</option>\n<option value=\"11\">免费赠送金卡法宝</option>\n<option value=\"12\">甜橙合作券</option>\n<option value=\"13\">新开卡赠券</option>\n<option value=\"14\">新开卡赠券</option>\n<option value=\"15\">赠送20*5组合优惠券</option>\n<option value=\"18\">80元活动赠券</option>\n<option value=\"19\">50元活动赠券</option>\n<option value=\"20\">活动10元抵用券</option>\n<option value=\"21\">活动20元抵用券</option>\n<option value=\"22\">测试支付优惠券</option>\n<option value=\"23\">10元测试抵用券-20日过期</option>\n<option value=\"24\">10元测试抵用券-25日过期</option>\n<option value=\"25\">20元测试抵用券-20日过期</option>\n<option value=\"26\">上海可用券</option>\n<option value=\"27\">会员法宝</option>\n<option value=\"28\">活动邀请券</option>\n<option value=\"32\">通用免房券</option>\n<option value=\"33\">通用优惠券</option>\n<option value=\"36\">限定免房券</option>\n<option value=\"37\">限定优惠券</option>\n<option value=\"39\">消费返还券</option>\n<option value=\"46\">T10元抵用券</option>\n<option value=\"47\">T20元抵用券</option>\n<option value=\"48\">T30元抵用券</option>\n<option value=\"49\">T金卡法宝</option>\n<option value=\"50\">T通用免房券</option>\n<option value=\"51\">T银卡法宝</option>\n<option value=\"56\">住宿券</option>\n<option value=\"57\">旋风升房券</option>\n<option value=\"58\">元气早餐券（双早）</option>\n<option value=\"59\">任性延时券</option>\n<option value=\"60\">定制拖鞋券</option>\n<option value=\"61\">礼包</option>\n<option value=\"62\">专车出行</option>\n<option value=\"65\">视频VIP券</option>\n<option value=\"68\">铂金法宝</option>\n<option value=\"69\">aaaa</option>\n<option value=\"70\">bbb</option>\n<option value=\"71\">ccc</option>\n<option value=\"73\">机场贵宾厅优惠券</option>\n<option value=\"74\">000000</option>\n<option value=\"75\">正龙测试</option>\n<option value=\"76\">测试优惠券发行</option>\n<option value=\"77\">新免房券180125</option>\n<option value=\"78\">一百元优惠券</option>\n<option value=\"79\">500元抵用券</option>\n<option value=\"80\">天喔红酒30元满减券</option>\n<option value=\"81\">天喔红酒70元满减券</option>\n<option value=\"84\">网易严选家居拖鞋券</option>\n<option value=\"86\">亚朵商城方巾礼盒券</option>\n<option value=\"87\">百度音乐7天VIP 券</option>\n<option value=\"88\">携程租车新人百元优惠</option>\n<option value=\"89\">滴滴专车券</option>\n<option value=\"90\">携程租车50元立减优惠</option>\n<option value=\"91\">车点点洗车券</option>\n<option value=\"92\">免房券500</option>\n<option value=\"93\">云若test</option>\n<option value=\"94\">云若test1</option>\n<option value=\"95\">新优惠券0829</option>\n<option value=\"96\">新免房券</option>\n<option value=\"200\">源溪test</option>\n<option value=\"201\">将明测试</option>\n<option value=\"202\">首单测试</option>\n<option value=\"203\">通用券测试</option>\n<option value=\"204\">亚朵生活馆10元券</option>\n<option value=\"205\">权益券更换需求新增testqx</option>\n<option value=\"206\">专车出行券(滴滴)</option>\n<option value=\"207\">亚朵生活馆10元无门槛券</option>\n<option value=\"208\">亚朵生活馆30元满减券</option>\n<option value=\"209\">亚朵生活馆60元满减券</option>\n<option value=\"210\">亚朵旅行10元无门槛券</option>\n<option value=\"211\">亚朵旅行50元满减券</option>\n<option value=\"212\">亚朵旅行100元满减券</option>\n<option value=\"213\">亚朵旅行150元满减券</option>\n<option value=\"214\">亚朵旅行200元满减券</option>\n<option value=\"215\">亚朵旅行1000元满减券</option>\n<option value=\"216\">空铁管家120元优惠券</option>\n<option value=\"217\">支付抵用券</option>\n<option value=\"219\">支付抵用券</option>\n<option value=\"220\">首单立减10元</option>\n<option value=\"221\">亚朵酒店满300减30优惠券</option>\n<option value=\"222\">恒星测试券</option>\n<option value=\"223\">支付抵扣券测试</option>\n<option value=\"224\">5元测试券</option>\n<option value=\"226\">灯果子满减券</option>\n<option value=\"227\">测试满减券1</option>\n<option value=\"230\">十动然拒</option>\n<option value=\"231\">十动然拒2</option>\n<option value=\"236\">好人卡</option>\n<option value=\"251\">清萝测试券</option>\n<option value=\"252\">ph-test</option>\n<option value=\"253\">ph-test</option>\n<option value=\"254\">ph-test3</option>\n<option value=\"255\">ph-test4</option>\n<option value=\"256\">通用满减券</option>\n<option value=\"257\">破天满减券</option>\n<option value=\"258\">绿萝满减</option>\n<option value=\"259\">大炮的券</option>\n<option value=\"260\">大炮满减券</option>\n<option value=\"261\">我给你满减券你来呀</option>\n<option value=\"262\">发满减券啦</option>\n<option value=\"263\">绿萝优惠券（满300）</option>\n<option value=\"264\">绿萝首单立减</option>\n<option value=\"265\">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</option>\n<option value=\"266\">满299减29</option>\n<option value=\"267\">满250减25</option>\n<option value=\"268\">满499减49</option>\n<option value=\"269\">DGZ优惠券</option>\n<option value=\"270\">xx20优惠券</option>\n<option value=\"271\">xx30优惠券</option>\n<option value=\"272\">xx40优惠券</option>\n<option value=\"273\">xx50优惠券</option>\n<option value=\"274\">xx10</option>\n<option value=\"275\">xx30</option>\n<option value=\"276\">xx50</option>\n<option value=\"277\">xx60优惠券</option>\n<option value=\"278\">xx满200减50</option>\n<option value=\"279\">灯果子免房券</option>\n<option value=\"280\">桐羽测试</option>\n<option value=\"281\">桐羽测试2</option>\n<option value=\"282\">满500减50的券</option>\n<option value=\"283\">立减券（立减22）</option>\n<option value=\"284\">送你免房券</option>\n<option value=\"285\">大礼包大礼包</option>\n<option value=\"286\">消费返还券</option>\n<option value=\"287\">信了你的邪</option>\n<option value=\"288\">又来啦</option>\n<option value=\"289\">快疯了</option>\n<option value=\"290\">嘻嘻哈哈</option>\n<option value=\"291\">恒星190107</option>\n<option value=\"292\">恒星1901072</option>\n<option value=\"293\">会员法宝111</option>\n<option value=\"294\">灯果子测试</option>\n<option value=\"295\">灯果子测试1</option>\n<option value=\"296\">满减券200-50</option>\n<option value=\"297\">恒星190108</option>\n<option value=\"298\">恒星1901082</option>\n<option value=\"299\">恒星190109</option>\n<option value=\"300\">恒星1901092</option>\n<option value=\"301\">恒星1901093</option>\n<option value=\"302\">灯果子测试2</option>\n<option value=\"303\">灯果子测试3</option>\n<option value=\"304\">满200减100</option>\n<option value=\"305\">XX满50减10</option>\n<option value=\"306\">灯果子测试4</option>\n<option value=\"307\">灯果子测试5</option>\n<option value=\"308\">321亚朵生活节10元满减券</option>\n<option value=\"309\">10元无门槛旅行券</option>\n<option value=\"310\">60元旅行满减券</option>\n<option value=\"311\">130元旅行满减券</option>\n<option value=\"312\">200元旅行满减券</option>\n<option value=\"313\">500元旅行满减券</option>\n<option value=\"314\">10元商城优惠券</option>\n<option value=\"315\">100元商城满减券</option>\n<option value=\"316\">200元商城满减券</option>\n<option value=\"317\">300元商城满减券</option>\n<option value=\"318\">2tes</option>\n<option value=\"319\">1112</option>\n<option value=\"320\">2222</option>\n<option value=\"321\">2222</option>\n<option value=\"322\">2222</option>\n<option value=\"323\">2222</option>\n<option value=\"324\">2222</option>\n<option value=\"325\">尤尼可测试</option>\n<option value=\"326\">尤尼可测试</option>\n<option value=\"329\">2222</option>\n<option value=\"332\">test</option>\n<option value=\"334\">优惠券名称</option>\n<option value=\"335\">优惠券名称</option>\n<option value=\"337\">优惠券名称</option>\n<option value=\"338\">优惠券名称</option>\n<option value=\"339\">2222</option>\n<option value=\"340\">优惠券名称</option>\n<option value=\"341\">新增接口</option>\n<option value=\"342\">新增接口</option>\n<option value=\"343\">2222</option>\n<option value=\"344\">2222</option>\n<option value=\"345\">新增接口</option>\n<option value=\"346\">新增接口</option>\n<option value=\"347\">2222</option>\n<option value=\"348\">2222</option>\n<option value=\"349\">2222</option>\n<option value=\"350\">test</option>\n</select>",
-			"id": 1,
-			"marketID": null,
-			"remark": "<input type=\"text\" name=\"remark1\" id=\"remark1\" value=\"\" style=\"border:0px solid #D4D4D4;width:240px;height:25px\" />"
-		}
-	}
+	"result": [{
+		"beginDate": "2019-05-10 00:00:00",
+		"chainIDs": "*",
+		"code": "MK278_1386200683257250720165",
+		"disType": 2,
+		"disTypeName": "30元抵用券",
+		"discountId": 3451468,
+		"discountRule": "\r\n- 本券适用于以下门店\r\n全部酒店\r\n- 本券只适用于以下星期\r\n 周一到周日可用",
+		"endDate": "2019-08-10 00:00:00",
+		"expiryStr": "有效期:2019-05-10~2019-08-10",
+		"expiryTip": "",
+		"holiday": null,
+		"holidayName": null,
+		"isPayCoupon": false,
+		"recommend": "",
+		"state": 0,
+		"type": 2,
+		"value": 30.0,
+		"weeks": "0,1,2,3,4,5,6"
+	}, {
+		"beginDate": "2019-05-10 00:00:00",
+		"chainIDs": "*",
+		"code": "MK278_1386200683969649346878",
+		"disType": 3,
+		"disTypeName": "20元抵用券",
+		"discountId": 3451469,
+		"discountRule": "\r\n- 本券适用于以下门店\r\n全部酒店\r\n- 本券只适用于以下星期\r\n 周一到周日可用",
+		"endDate": "2019-08-10 00:00:00",
+		"expiryStr": "有效期:2019-05-10~2019-08-10",
+		"expiryTip": "",
+		"holiday": null,
+		"holidayName": null,
+		"isPayCoupon": false,
+		"recommend": "",
+		"state": 0,
+		"type": 2,
+		"value": 20.0,
+		"weeks": "0,1,2,3,4,5,6"
+	}],
+	"retcode": 0,
+	"retmsg": "操作成功"
 }
