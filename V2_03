@@ -1,0 +1,233 @@
+ALTER PROCEDURE [dbo].[p_rpt_QueryMebCrmRanking_V2](@ChainID INT = 0,
+                                                         @dtAccDateBegin DATETIME = '1900-1-1', --起始营业日
+                                                         @dtAccDateEnd DATETIME = '2050-1-1', --结束营业日
+                                                         @ItemType int, -- 1 按照 间夜， 2， 按照 总消费
+                                                         @nPageSize int=100,
+                                                         @nGotoPage int=1)
+AS
+BEGIN
+
+
+    Declare @AccDate VarChar(10)
+    DECLARE @nPageCount INT
+    DECLARE @nRecordCount INT
+
+    SET @nPageCount = 0
+    SET @nRecordCount = 0
+    SET @nPageSize = 100
+    SET @nGotoPage = 1
+
+--获取当前营业日
+    SELECT @AccDate = ParamValue FROM s_Param WHERE ParamID = 1
+
+    SELECT DATEDIFF(day, ArrAccDate, DepAccDate) AS Night,
+           MebID,
+           FolioID,
+           ChainID,
+           RoomRateTypeID,
+           RoomCount,
+           ArrAccDate,
+           DepAccDate,
+           FolioState
+    INTO #ReoprtFolio_27
+    FROM f_Folio
+    WHERE FolioType = 1
+      and MebTypeID in (4, 10, 11)
+      and GuestsSourceID not in (6, 7)
+      And FolioState in (4, 5)
+      And ArrAccDate <= DepAccDate
+      AND (ArrAccDate <= @dtAccDateEnd and DepAccDate >= @dtAccDateBegin)
+      and ChainID = @ChainID
+      --AND (ArrAccDate Between @dtAccDateBegin and @dtAccDateEnd OR DepAccDate Between @dtAccDateBegin and @dtAccDateEnd)
+    Order By FolioID Desc
+
+--需要清理一下一些异常的数据信息
+    Update #ReoprtFolio_27 SET DepAccDate = @dtAccDateEnd Where DepAccDate > @dtAccDateEnd
+    Update #ReoprtFolio_27 SET ArrAccDate = @dtAccDateBegin Where ArrAccDate < @dtAccDateBegin
+
+
+--DELETE from #ReoprtFolio_27 WHERE DepAccDate = ArrAccDate And  FolioState = 4
+
+    update #ReoprtFolio_27 set Night = DATEDIFF(day, ArrAccDate, DepAccDate) WHERE 1 = 1
+
+    IF (@ItemType = 1)
+        BEGIN
+            --得到一个按照会员入住间夜进行汇总的数据
+            SELECT SUM(Night) as Night,
+                   MebID
+            INTO #Reoprt_27
+            FROM #ReoprtFolio_27
+            WHERE ArrAccDate <= DepAccDate
+            Group by MebID
+            Order By Night DESC
+
+
+            --进行分页，并且获取到分页的数据 用于下面的费用计算
+            SELECT @nRecordCount = Count(*)
+            FROM #Reoprt_27 a
+
+            SET @nPageCount = Ceiling(@nRecordCount * 1.0 / @nPageSize)
+
+            SELECT _RecordCount = @nRecordCount,
+                   _PageCount   = @nPageCount,
+                   *
+            INTO #DATA_27
+            FROM (SELECT Row_Number() OVER (ORDER BY Night desc) AS _RowID, *
+                  FROM #Reoprt_27) T
+            WHERE T._RowID > ((@nGotoPage - 1) * @nPageSize)
+              and T._RowID <= (@nGotoPage * @nPageSize)
+
+
+            SELECT R2.*,
+                   RR2.Night as AllNight,
+                   AT.ItemID,
+                   AT.Debit
+            INTO #Reprot_Trans
+            FROM #ReoprtFolio_27 R2
+                     Inner Join #Reoprt_27 RR2 On RR2.MebID = r2.MebID
+                     Left join a_Trans AT ON ((AT.FolioID = R2.FolioID And AT.OriginFolioID = 0) OR
+                                              (AT.OriginFolioID = R2.FolioID)) And
+                                             AT.ChainID = R2.ChainID
+                and
+                                             AT.ItemID not in (9000, 1064, 1068, 1083, 6005, 6006)
+
+
+            WHERE AT.VoidFlag = 0
+              And AT.CreateAccDate Between @dtAccDateBegin and @dtAccDateEnd
+              AND AT.CreateAccDate <> @dtAccDateEnd
+
+            SELECT a.*,
+                   ISNULL(b.AD, 0) + ISNULL(c.BD, 0) DayRate,
+                   ISNULL(d.AllDebit, 0) as          BreakFaster,
+                   ISNULL(E.AllDebit, 0) AS          RoomRate,
+                   ISNULL(k.AllDebit, 0) AS          AllDebit
+            FROM #DATA_27 a
+                     LEFT JOIN (
+                SELECT COUNT(1) as AD,
+                       MebID
+                from #Reprot_Trans
+                WHERE itemid = 1007
+                Group By Mebid) b on b.mebid = a.mebid
+                     LEFT JOIN (
+                SELECT COUNT(1) * 0.5 BD,
+                       MebID
+                from #Reprot_Trans
+                WHERE itemid = 1005
+                Group By Mebid) c on c.mebid = a.mebid
+                     LEFT JOIN (
+                SELECT SUM(debit) as AllDebit,
+                       MebID
+                from #Reprot_Trans
+                WHERE itemid = 1054
+                Group By Mebid) d on D.mebid = a.mebid
+                     LEFT JOIN (
+                SELECT SUM(debit) as AllDebit,
+                       MebID
+                from #Reprot_Trans
+                WHERE itemid in (1000, 1005, 1007, 1010, 1017, 1122)
+                Group By Mebid) e on e.mebid = a.mebid
+                     LEFT JOIN (
+                SELECT SUM(debit) as AllDebit,
+                       MebID
+                from #Reprot_Trans
+                WHERE 1 = 1
+                Group By Mebid) K on K.mebid = a.mebid
+            WHERE 1 = 1
+            Order by _RowID asc
+
+
+            Drop Table #ReoprtFolio_27
+            Drop Table #Reoprt_27
+            Drop Table #Reprot_Trans
+            Drop Table #DATA_27
+        End
+    Else
+        Begin
+
+
+            SELECT MebID,
+                   AT.ItemID,
+                   AT.Debit
+            INTO #Reprot_Trans_c
+            FROM #ReoprtFolio_27 R2
+                     LEFT join a_Trans AT ON ((AT.FolioID = R2.FolioID And AT.OriginFolioID = 0) OR
+                                              (AT.OriginFolioID = R2.FolioID)) And
+                                             AT.ItemID not in (9000, 1064, 1068, 1083, 6005, 6006)
+            WHERE AT.VoidFlag = 0
+              And AT.CreateAccDate Between @dtAccDateBegin and @dtAccDateEnd
+              AND AT.CreateAccDate <> @dtAccDateEnd
+
+
+            --进行分页，并且获取到分页的数据 用于下面的费用计算
+            SELECT @nRecordCount = Count(*)
+            FROM (
+                     SELECT MebID,
+                            SUM(ISNULL(Debit, 0)) as AllDebit
+                     FROM #Reprot_Trans_c
+                     Group by MebID
+                 ) a
+
+            SET @nPageCount = Ceiling(@nRecordCount * 1.0 / @nPageSize)
+
+            SELECT _RecordCount = @nRecordCount,
+                   _PageCount   = @nPageCount,
+                   *
+            INTO #DATA_28
+            FROM (SELECT Row_Number() OVER (ORDER BY d2.AllDebit desc) AS _RowID, *
+                  FROM (
+                           SELECT MebID,
+                                  SUM(ISNULL(Debit, 0)) as AllDebit
+                           FROM #Reprot_Trans_c
+                           Group by MebID) d2) T
+            WHERE T._RowID > ((@nGotoPage - 1) * @nPageSize)
+              and T._RowID <= (@nGotoPage * @nPageSize)
+
+            SELECT a.*,
+                   ISNULL(b.AD, 0) + ISNULL(c.BD, 0) DayRate,
+                   ISNULL(d.AllDebit, 0) as          BreakFaster,
+                   ISNULL(E.AllDebit, 0) AS          RoomRate,
+                   M.Night
+            FROM #DATA_28 a
+                     LEFT JOIN (
+                SELECT SUM(Night) as Night,
+                       MebID
+                FROM #ReoprtFolio_27
+                WHERE ArrAccDate <= DepAccDate
+                Group by MebID
+            ) M ON M.MebID = a.mebid
+                     LEFT JOIN (
+                SELECT COUNT(1) as AD,
+                       MebID
+                from #Reprot_Trans_c
+                WHERE itemid = 1007
+                Group By Mebid) b on b.mebid = a.mebid
+                     LEFT JOIN (
+                SELECT COUNT(1) * 0.5 BD,
+                       MebID
+                from #Reprot_Trans_c
+                WHERE itemid = 1005
+                Group By Mebid) c on c.mebid = a.mebid
+                     LEFT JOIN (
+                SELECT SUM(debit) as AllDebit,
+                       MebID
+                from #Reprot_Trans_c
+                WHERE itemid = 1054
+                Group By Mebid) d on D.mebid = a.mebid
+                     LEFT JOIN (
+                SELECT SUM(debit) as AllDebit,
+                       MebID
+                from #Reprot_Trans_c
+                WHERE itemid in (1000, 1005, 1007, 1010, 1017, 1122)
+                Group By Mebid) e on e.mebid = a.mebid
+            WHERE 1 = 1
+            Order by a.AllDebit desc
+
+
+            Drop Table #ReoprtFolio_27
+            Drop Table #Reprot_Trans_c
+            Drop Table #DATA_28
+
+
+        End
+
+END
