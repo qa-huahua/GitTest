@@ -1,9 +1,13 @@
-ALTER PROCEDURE [dbo].[p_rpt_QueryMebCrmRanking_V2](@ChainID INT = 0,
+----旧的
+ALTER PROCEDURE [dbo].[p_rpt_QueryMebCrmRanking_V2_JAVA](@ChainID INT = 0,
                                                          @dtAccDateBegin DATETIME = '1900-1-1', --起始营业日
                                                          @dtAccDateEnd DATETIME = '2050-1-1', --结束营业日
                                                          @ItemType int, -- 1 按照 间夜， 2， 按照 总消费
                                                          @nPageSize int=100,
-                                                         @nGotoPage int=1)
+                                                         @nGotoPage int=1,
+                                                         @roomRateItems VarChar(200),
+                                                         @breakFasterRateItems VarChar(200)
+                                                         )
 AS
 BEGIN
 
@@ -118,13 +122,13 @@ BEGIN
                 SELECT SUM(debit) as AllDebit,
                        MebID
                 from #Reprot_Trans
-                WHERE itemid = 1054
+                WHERE CharIndex(',' + Convert(varchar(10), ItemID) + ',', @breakFasterRateItems) > 0
                 Group By Mebid) d on D.mebid = a.mebid
                      LEFT JOIN (
                 SELECT SUM(debit) as AllDebit,
                        MebID
                 from #Reprot_Trans
-                WHERE itemid in (1000, 1005, 1007, 1010, 1017, 1122)
+                WHERE CharIndex(',' + Convert(varchar(10), ItemID) + ',', @roomRateItems) > 0
                 Group By Mebid) e on e.mebid = a.mebid
                      LEFT JOIN (
                 SELECT SUM(debit) as AllDebit,
@@ -211,13 +215,13 @@ BEGIN
                 SELECT SUM(debit) as AllDebit,
                        MebID
                 from #Reprot_Trans_c
-                WHERE itemid = 1054
+                WHERE CharIndex(',' + Convert(varchar(10), ItemID) + ',', @breakFasterRateItems) > 0
                 Group By Mebid) d on D.mebid = a.mebid
                      LEFT JOIN (
                 SELECT SUM(debit) as AllDebit,
                        MebID
                 from #Reprot_Trans_c
-                WHERE itemid in (1000, 1005, 1007, 1010, 1017, 1122)
+                WHERE CharIndex(',' + Convert(varchar(10), ItemID) + ',', @roomRateItems) > 0
                 Group By Mebid) e on e.mebid = a.mebid
             WHERE 1 = 1
             Order by a.AllDebit desc
